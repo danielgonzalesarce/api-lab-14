@@ -1,0 +1,209 @@
+{
+  "swaggerUrl": "http://localhost:5092/swagger/index.html",
+  "fecha": "26/11/2026",
+  "pruebas": [
+    {
+      "numero": 1,
+      "titulo": "Insertar Product",
+      "endpoint": "POST /api/Product/insert",
+      "objetivo": "Registrar un producto con nombre y precio. El id generado queda en la tabla Products.",
+      "request": {
+        "name": "Monitor 24",
+        "price": 850
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Producto insertado correctamente.",
+        "id": 8
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\01-insertar-product.png",
+      "comentario": "Swagger respondió 200. El producto quedó grabado con el id 8."
+    },
+    {
+      "numero": 2,
+      "titulo": "Eliminar Product",
+      "endpoint": "DELETE /api/Product/delete",
+      "objetivo": "Eliminar físicamente un producto que no tiene detalles de factura.",
+      "request": {
+        "id": 9
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Producto eliminado correctamente.",
+        "id": 9
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\02-eliminar-product.png",
+      "comentario": "Se eliminó el producto 9 (Mouse optico). La respuesta confirma la eliminación física."
+    },
+    {
+      "numero": 3,
+      "titulo": "Insertar Customer",
+      "endpoint": "POST /api/Customer/insert",
+      "objetivo": "Registrar un cliente con nombre, apellido y número de documento único.",
+      "request": {
+        "firstName": "Lucia",
+        "lastName": "Flores",
+        "documentNumber": "DOC380296"
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Cliente insertado correctamente.",
+        "id": 3
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\03-insertar-customer.png",
+      "comentario": "El cliente quedó grabado con el id 3 y documento DOC380296."
+    },
+    {
+      "numero": 4,
+      "titulo": "Eliminar Customer",
+      "endpoint": "DELETE /api/Customer/delete",
+      "objetivo": "Eliminar un cliente que todavía no tiene facturas asociadas.",
+      "request": {
+        "id": 4
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Cliente eliminado correctamente.",
+        "id": 4
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\04-eliminar-customer.png",
+      "comentario": "Se eliminó el cliente 4 (Pedro Diaz). No tenía facturas, así que la restricción de borrado lo permitió."
+    },
+    {
+      "numero": 5,
+      "titulo": "Insertar Invoice",
+      "endpoint": "POST /api/Invoice/insert",
+      "objetivo": "Crear una factura para el cliente registrado, con número único.",
+      "request": {
+        "idCustomer": 3,
+        "date": "2026-11-26T10:30:00",
+        "invoiceNumber": "F001-380296",
+        "total": 0
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Factura insertada correctamente.",
+        "id": 4
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\05-insertar-invoice.png",
+      "comentario": "La factura F001-380296 quedó asociada al cliente 3 con el id 4."
+    },
+    {
+      "numero": 6,
+      "titulo": "Actualizar numeroDocumento al cliente",
+      "endpoint": "PUT /api/Customer/update-document",
+      "objetivo": "Cambiar el número de documento del cliente. El modelo Customers no tiene correo: el diagrama solo define FirstName, LastName y DocumentNumber.",
+      "request": {
+        "id": 3,
+        "documentNumber": "DOC380296B"
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Número de documento actualizado correctamente.",
+        "id": 3
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\06-actualizar-documento.png",
+      "comentario": "El documento del cliente 3 pasó de DOC380296 a DOC380296B."
+    },
+    {
+      "numero": 7,
+      "titulo": "Actualizar Precio al producto",
+      "endpoint": "PUT /api/Product/update-price",
+      "objetivo": "Cambiar solo el precio del producto. LastName pertenece al cliente, no a esta operación.",
+      "request": {
+        "id": 8,
+        "price": 799.9
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Precio actualizado correctamente.",
+        "id": 8
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\07-actualizar-precio.png",
+      "comentario": "El precio del producto 8 quedó en 799.9. Ese valor se usará al calcular el detalle."
+    },
+    {
+      "numero": 8,
+      "titulo": "Insertar Lista de Factura por cliente",
+      "endpoint": "POST /api/Invoice/insert-list",
+      "objetivo": "Insertar varias facturas del mismo cliente en una sola operación, con un único guardado.",
+      "request": {
+        "idCustomer": 3,
+        "invoices": [
+          {
+            "date": "2026-11-26T11:00:00",
+            "invoiceNumber": "F002-380296",
+            "total": 150
+          },
+          {
+            "date": "2026-11-26T11:15:00",
+            "invoiceNumber": "F003-380296",
+            "total": 220
+          }
+        ]
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Se insertaron 2 facturas.",
+        "id": null
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\08-insertar-lista-facturas.png",
+      "comentario": "Se insertaron 2 facturas. Si un número viniera repetido o el cliente no existiera, no se guardaría ninguna."
+    },
+    {
+      "numero": 9,
+      "titulo": "Eliminar Lista de Product",
+      "endpoint": "DELETE /api/Product/delete-list",
+      "objetivo": "Eliminar varios productos en un solo SaveChanges. Si uno no existe o tiene detalles, no se elimina ninguno.",
+      "request": {
+        "products": [
+          {
+            "id": 10
+          },
+          {
+            "id": 11
+          }
+        ]
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Se eliminaron 2 productos.",
+        "id": null
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\09-eliminar-lista-product.png",
+      "comentario": "Se eliminaron los productos 10 y 11. Ninguno tenía detalles de factura."
+    },
+    {
+      "numero": 10,
+      "titulo": "Insertar Factura Detalle",
+      "endpoint": "POST /api/Invoice/insert-details",
+      "objetivo": "Agregar el detalle de la factura. El precio sale del producto guardado y el subtotal es cantidad por precio. El total de la factura se recalcula.",
+      "request": {
+        "idInvoice": 4,
+        "details": [
+          {
+            "idProduct": 8,
+            "amount": 2
+          }
+        ]
+      },
+      "httpStatus": 200,
+      "response": {
+        "success": true,
+        "message": "Detalles insertados correctamente. Total de la factura: 1599.8.",
+        "id": 4
+      },
+      "imagen": "C:\\proyectosTecsup\\api lab 14\\informe-lab14\\10-insertar-factura-detalle.png",
+      "comentario": "Se agregó el producto 8 con cantidad 2. El precio tomado de la base es 799.9, el subtotal es 1599.8 y ese valor queda como total de la factura 4."
+    }
+  ]
+}
